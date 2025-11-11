@@ -1,0 +1,31 @@
+{
+  "Routes": [
+    {
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "UpstreamPathTemplate": "/api/auth/login",
+      "DownstreamPathTemplate": "/api/login",
+      "DownstreamScheme": "http",
+      "ServiceName": "AuthService"
+    },
+    {
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "UpstreamPathTemplate": "/api/auth/register",
+      "DownstreamPathTemplate": "/api/register",
+      "DownstreamScheme": "http",
+      "ServiceName": "AuthService"
+    },
+    {
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "UpstreamPathTemplate": "/api/auth/userinfo",
+      "DownstreamPathTemplate": "/api/userinfo",
+      "DownstreamScheme": "http",
+      "ServiceName": "AuthService"
+    }
+  ]
+}

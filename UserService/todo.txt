@@ -1,0 +1,8 @@
+1. Separate internal API from public facing API
+2. Connect to Eureka
+3. Use Eureka's capabilities to communicate with AvatarService instead of using the hostname directly
+4. Tear down the project into two or more projects where UserService.Api exposes the queries and commands this service offers and the UserService implements the details
+
+2025-07-12 23:55
+User not found is not caught at FindUser route in controller
+when searchTerm is empty an exception is thrown

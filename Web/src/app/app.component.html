@@ -1,0 +1,69 @@
+<header>
+  <nav class="bg-white shadow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <a routerLink="/">
+            <div class="text-xl font-bold text-primary">BiographyApp</div>
+          </a>
+        </div>
+        <div class="flex items-center space-x-4">
+          <!-- Navigation Links (Show when logged in) -->
+          <div class="text-mgray hidden md:flex space-x-4" *ngIf="isSignedIn">
+            <a routerLink="/" class="hover:text-primary px-3 py-2 rounded-md">Home</a>
+            <a routerLink="/profile" class="hover:text-primary px-3 py-2 rounded-md">Profile</a>
+            <a routerLink="/search" class="hover:text-primary px-3 py-2 rounded-md">Search</a>
+            <a (click)="signOut()" routerLink="/" class="hover:text-primary px-3 py-2 rounded-md">Logout</a>
+          </div>
+          <!-- Auth Links (Show when logged out) -->
+          <div class="hidden md:flex space-x-4" *ngIf="!isSignedIn">
+            <a routerLink="/login" class="text-mgray hover:text-primary px-3 py-2 rounded-md">Login</a>
+            <a routerLink="/register"
+              class="bg-primary hover:bg-indigo-700 text-white px-4 py-2 rounded-md">Register</a>
+            <a routerLink="/search" class="hover:text-primary px-3 py-2 rounded-md">Search</a>
+          </div>
+          <!-- Mobile menu button -->
+          <button type="button" class="md:hidden p-2 rounded-md text-mgray hover:text-primary focus:outline-none"
+            (click)="toggleMobileMenu()">
+            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="md:hidden" *ngIf="isMobileMenuOpen">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3" *ngIf="isSignedIn">
+        <a routerLink="/"
+          class="block px-3 py-2 rounded-md text-base font-medium text-mgray hover:text-primary hover:bg-gray-50">Home</a>
+        <a routerLink="/profile"
+          class="block px-3 py-2 rounded-md text-base font-medium text-mgray hover:text-primary hover:bg-gray-50">Profile</a>
+        <a routerLink="/search"
+          class="block px-3 py-2 rounded-md text-base font-medium text-mgray hover:text-primary hover:bg-gray-50">Search</a>
+        <a (click)="signOut()" routerLink="/"
+          class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-mgray hover:text-primary hover:bg-gray-50">Logout</a>
+      </div>
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3" *ngIf="!isSignedIn">
+        <a routerLink="/login"
+          class="block px-3 py-2 rounded-md text-base font-medium text-mgray hover:text-primary hover:bg-gray-50">Login</a>
+        <a routerLink="/register"
+          class="block px-3 py-2 rounded-md text-base font-medium text-mgray hover:text-primary hover:bg-gray-50">Register</a>
+        <a routerLink="/search"
+          class="block px-3 py-2 rounded-md text-base font-medium text-mgray hover:text-primary hover:bg-gray-50">Search</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<!-- <footer>
+  <div class="text-center text-mgray border py-4">
+    © 2025 BiographyApp. All rights reserved.
+  </div>
+</footer> -->

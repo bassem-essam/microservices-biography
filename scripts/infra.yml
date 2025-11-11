@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  eureka:
+    image: steeltoeoss/eureka-server
+    container_name: eureka-server
+    ports:
+    - "8761:8761"
+
+  mongodb:
+    image: mongo:7.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongodb_data:/data/db
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+  redis:
+      image: redis:7.2-alpine
+      container_name: redis
+      ports:
+        - "6379:6379"
+      command: redis-server --appendonly yes
+      volumes:
+        - redis_data:/data
+
+  auth-sql-server:
+      image: mcr.microsoft.com/mssql/server:2025-latest
+      container_name: auth-sql-server
+      ports:
+        - 1433:1433
+      environment:
+        ACCEPT_EULA: y
+        MSSQL_SA_PASSWORD: "YourStrong!Passw0rd"
+      volumes:
+          - auth_sqlserver_data:/var/opt/mssql
+
+  user-sql-server:
+      image: mcr.microsoft.com/mssql/server:2025-latest
+      container_name: user-sql-server
+      ports:
+        - 1434:1433
+      environment:
+        ACCEPT_EULA: y
+        MSSQL_SA_PASSWORD: "YourStrong!Passw0rd"
+      volumes:
+          - user_sqlserver_data:/var/opt/mssql
+
+volumes:
+  mongodb_data:
+  rabbitmq_data:
+  redis_data:
+  auth_sqlserver_data:
+  user_sqlserver_data:
+

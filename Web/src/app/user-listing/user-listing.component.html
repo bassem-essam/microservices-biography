@@ -1,0 +1,17 @@
+<div>
+    <div (click)="navigateToUser(user.username)"
+        class="flex items-center gap-4 p-4 rounded-lg shadow-lg bg-white hover:bg-indigo-200 cursor-pointer">
+        <div class="flex-shrink-0">
+            <img [src]="user.avatar ? '/api/avatar/' + user.avatar : '/assets/default-avatar.png'"
+                alt="{{ user.username }} avatar" class="w-12 h-12 rounded-full">
+        </div>
+        <div class="relative w-full">
+            <div class="flex items-center">
+                <h3 class="grow-1 text-lg font-medium text-gray-900">{{ user.name }}</h3>
+                <p class="grow-0 text-sm text-gray-500">{{ user.visitCount == undefined ? '' : 'Visits: ' + user.visitCount }}</p>
+            </div>
+            <p class="text-sm text-gray-500">{{ user.username }}</p>
+            <p class="mt-1 text-gray-600">{{ user.biography }}</p>
+        </div>
+    </div>
+</div>

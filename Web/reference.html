@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biography App</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+</head>
+<body class="bg-gray-50">
+  <!-- Navigation Component -->
+  <nav class="bg-white shadow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <div class="text-xl font-bold text-indigo-600">BiographyApp</div>
+        </div>
+        <div class="flex items-center space-x-4">
+          <!-- Navigation Links (Show when logged in) -->
+          <div class="hidden md:flex space-x-4" *ngIf="isLoggedIn">
+            <a href="#" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md">Home</a>
+            <a href="#" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md">My Biography</a>
+            <button (click)="logout()" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md">Logout</button>
+          </div>
+          <!-- Auth Links (Show when logged out) -->
+          <div class="hidden md:flex space-x-4" *ngIf="!isLoggedIn">
+            <a routerLink="/login" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md">Login</a>
+            <a routerLink="/register" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md">Register</a>
+          </div>
+          <!-- Mobile menu button -->
+          <button type="button" class="md:hidden p-2 rounded-md text-gray-700 hover:text-indigo-600 focus:outline-none" (click)="toggleMobileMenu()">
+            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Mobile Menu -->
+    <div class="md:hidden" *ngIf="isMobileMenuOpen">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3" *ngIf="isLoggedIn">
+        <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50">Home</a>
+        <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50">My Biography</a>
+        <button (click)="logout()" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50">Logout</button>
+      </div>
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3" *ngIf="!isLoggedIn">
+        <a routerLink="/login" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50">Login</a>
+        <a routerLink="/register" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50">Register</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Login Component -->
+  <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8" *ngIf="currentPage === 'login'">
+    <div class="max-w-md w-full space-y-8">
+      <div>
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
+      </div>
+      <form class="mt-8 space-y-6" (ngSubmit)="login()">
+        <div class="rounded-md shadow-sm space-y-4">
+          <div>
+            <label for="email-address" class="sr-only">Email address</label>
+            <input id="email-address" name="email" type="email" required 
+                   class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" 
+                   placeholder="Email address"
+                   [(ngModel)]="loginForm.email">
+          </div>
+          <div>
+            <label for="password" class="sr-only">Password</label>
+            <input id="password" name="password" type="password" required 
+                   class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" 
+                   placeholder="Password"
+                   [(ngModel)]="loginForm.password">
+          </div>
+        </div>
+
+        <div>
+          <button type="submit" 
+                  class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Sign in
+          </button>
+        </div>
+
+        <div class="text-center">
+          <p class="text-sm text-gray-600">
+            Don't have an account?
+            <a routerLink="/register" class="font-medium text-indigo-600 hover:text-indigo-500">
+              Register here
+            </a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Register Component -->
+  <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8" *ngIf="currentPage === 'register'">
+    <div class="max-w-md w-full space-y-8">
+      <div>
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Create your account</h2>
+      </div>
+      <form class="mt-8 space-y-6" (ngSubmit)="register()">
+        <div class="rounded-md shadow-sm space-y-4">
+          <div>
+            <label for="name" class="sr-only">Full name</label>
+            <input id="name" name="name" type="text" required 
+                   class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" 
+                   placeholder="Full name"
+                   [(ngModel)]="registerForm.name">
+          </div>
+          <div>
+            <label for="register-email" class="sr-only">Email address</label>
+            <input id="register-email" name="email" type="email" required 
+                   class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" 
+                   placeholder="Email address"
+                   [(ngModel)]="registerForm.email">
+          </div>
+          <div>
+            <label for="register-password" class="sr-only">Password</label>
+            <input id="register-password" name="password" type="password" required 
+                   class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" 
+                   placeholder="Password"
+                   [(ngModel)]="registerForm.password">
+          </div>
+          <div>
+            <label for="confirm-password" class="sr-only">Confirm Password</label>
+            <input id="confirm-password" name="confirmPassword" type="password" required 
+                   class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" 
+                   placeholder="Confirm Password"
+                   [(ngModel)]="registerForm.confirmPassword">
+          </div>
+        </div>
+
+        <div>
+          <button type="submit" 
+                  class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Register
+          </button>
+        </div>
+
+        <div class="text-center">
+          <p class="text-sm text-gray-600">
+            Already have an account?
+            <a routerLink="/login" class="font-medium text-indigo-600 hover:text-indigo-500">
+              Sign in
+            </a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Biography View Component -->
+  <div class="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" *ngIf="currentPage === 'biography'">
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+      <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
+        <div>
+          <h3 class="text-lg leading-6 font-medium text-gray-900">My Biography</h3>
+          <p class="mt-1 max-w-2xl text-sm text-gray-500">Personal information and details</p>
+        </div>
+        <button (click)="enableEdit()" *ngIf="!isEditing" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+          Edit Biography
+        </button>
+        <div *ngIf="isEditing" class="flex space-x-2">
+          <button (click)="saveChanges()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
+            Save
+          </button>
+          <button (click)="cancelEdit()" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+            Cancel
+          </button>
+        </div>
+      </div>
+
+      <!-- Profile Section -->
+      <div class="border-t border-gray-200">
+        <div class="px-4 py-5 sm:px-6">
+          <div class="flex flex-col sm:flex-row">
+            <!-- Profile Picture -->
+            <div class="mb-4 sm:mb-0 sm:mr-6 flex-shrink-0">
+              <div class="relative h-40 w-40 rounded-full overflow-hidden bg-gray-100">
+                <img [src]="user.profilePicture || '/assets/default-avatar.png'" alt="Profile picture" class="h-full w-full object-cover">
+                <div *ngIf="isEditing" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                  <label for="profile-upload" class="cursor-pointer text-white hover:text-indigo-200">
+                    <span class="sr-only">Change profile picture</span>
+                    <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </label>
+                  <input id="profile-upload" type="file" class="hidden" (change)="onProfilePictureChange($event)">
+                </div>
+              </div>
+            </div>
+
+            <!-- Personal Information -->
+            <div class="flex-1">
+              <div class="space-y-4">
+                <div>
+                  <h4 class="text-sm font-medium text-gray-500">Full name</h4>
+                  <div *ngIf="!isEditing" class="mt-1 text-sm text-gray-900">{{user.name}}</div>
+                  <input *ngIf="isEditing" type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" [(ngModel)]="editForm.name">
+                </div>
+                
+                <div>
+                  <h4 class="text-sm font-medium text-gray-500">Email address</h4>
+                  <div class="mt-1 text-sm text-gray-900">{{user.email}}</div>
+                </div>
+                
+                <div>
+                  <h4 class="text-sm font-medium text-gray-500">Date of birth</h4>
+                  <div *ngIf="!isEditing" class="mt-1 text-sm text-gray-900">{{user.dateOfBirth}}</div>
+                  <input *ngIf="isEditing" type="date" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" [(ngModel)]="editForm.dateOfBirth">
+                </div>
+                
+                <div>
+                  <h4 class="text-sm font-medium text-gray-500">Location</h4>
+                  <div *ngIf="!isEditing" class="mt-1 text-sm text-gray-900">{{user.location}}</div>
+                  <input *ngIf="isEditing" type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" [(ngModel)]="editForm.location">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Biography Content -->
+      <div class="border-t border-gray-200">
+        <div class="px-4 py-5 sm:p-6">
+          <h4 class="text-sm font-medium text-gray-500 mb-2">Biography</h4>
+          <div *ngIf="!isEditing" class="prose max-w-none text-sm text-gray-900">
+            <p>{{user.biography || 'No biography provided yet. Click Edit to add your story.'}}</p>
+          </div>
+          <textarea *ngIf="isEditing" rows="6" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
+                   placeholder="Write your biography here..." 
+                   [(ngModel)]="editForm.biography"></textarea>
+        </div>
+      </div>
+
+      <!-- Interests/Hobbies -->
+      <div class="border-t border-gray-200">
+        <div class="px-4 py-5 sm:p-6">
+          <h4 class="text-sm font-medium text-gray-500 mb-2">Interests & Hobbies</h4>
+          <div *ngIf="!isEditing" class="mt-1 flex flex-wrap gap-2">
+            <span *ngFor="let interest of user.interests" class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-indigo-100 text-indigo-800">
+              {{interest}}
+            </span>
+            <span *ngIf="!user.interests || user.interests.length === 0" class="text-sm text-gray-500">No interests added yet.</span>
+          </div>
+          <div *ngIf="isEditing" class="mt-1">
+            <input type="text" class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
+                   placeholder="Add interests separated by commas" 
+                   [(ngModel)]="editForm.interestsInput">
+            <p class="mt-1 text-xs text-gray-500">Enter interests separated by commas (e.g., Reading, Travel, Photography)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Home Component -->
+  <div class="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" *ngIf="currentPage === 'home'">
+    <div class="text-center">
+      <h1 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Welcome to BiographyApp</h1>
+      <p class="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+        Create, edit and share your personal biography.
+      </p>
+      <div class="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
+        <div class="rounded-md shadow">
+          <a routerLink="/biography" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
+            View My Biography
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

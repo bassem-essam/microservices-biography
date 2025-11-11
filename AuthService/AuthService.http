@@ -1,0 +1,41 @@
+### Variables
+@baseUrl = http://localhost:5112
+@authToken = 
+
+### Register a new user
+POST {{baseUrl}}/api/register
+Content-Type: application/json
+
+{
+  "username": "newuser2",
+  "password": "Password123!"
+}
+
+### Login with the registered user
+POST {{baseUrl}}/api/login
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "Test@123"
+}
+
+###
+# @authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGVzdHVzZXIiLCJqdGkiOiI4OTRlZmY5NC1hMWIyLTQxMjQtOGQxYi1hYmY3MTBkMDA0N2EiLCJleHAiOjE3NDc2ODY4NzcsImlzcyI6IllvdXJBcHBOYW1lIiwiYXVkIjoiWW91ckFwcENsaWVudHMifQ.LpjO-rQ9CM-qAeKurLKDeNd8Q1i7rGxKd3hA7eWBSOI
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibmV3dXNlcjIzMzMzIiwianRpIjoiZWRmNDIxNDEtYWY0Ny00OTljLTgwNWQtMDY5NTQzY2Y5YmQzIiwiZXhwIjoxNzUyOTYzMzU4LCJpc3MiOiJZb3VyQXBwTmFtZSIsImF1ZCI6IllvdXJBcHBDbGllbnRzIn0.GvNauGQZSdwXPwmZKnNguHAaRHljiktDnz3ojcW9oS4
+
+### Get current user info with JWT token
+GET {{baseUrl}}/api/userinfo
+Authorization: Bearer {{authToken}}
+
+### Try to get user info without token (should fail)
+GET {{baseUrl}}/api/auth/userinfo
+
+### Login with non-existent user (should fail)
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "nonexistentuser",
+  "password": "Test@123"
+}

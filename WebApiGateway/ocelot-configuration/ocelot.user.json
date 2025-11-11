@@ -1,0 +1,40 @@
+{
+  "Routes": [
+    {
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "UpstreamPathTemplate": "/api/user/{id}",
+      "DownstreamPathTemplate": "/api/users/{id}",
+      "DownstreamScheme": "http",
+      "ServiceName": "UserService"
+    },
+    {
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "UpstreamPathTemplate": "/api/search-users",
+      "DownstreamPathTemplate": "/api/search-users",
+      "DownstreamScheme": "http",
+      "ServiceName": "UserService"
+    },
+    {
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "UpstreamPathTemplate": "/api/top-users",
+      "DownstreamPathTemplate": "/api/top-users",
+      "DownstreamScheme": "http",
+      "ServiceName": "UserService"
+    },
+    {
+      "UpstreamHttpMethod": [
+        "Get", "Put"
+      ],
+      "UpstreamPathTemplate": "/api/profile",
+      "DownstreamPathTemplate": "/api/profile",
+      "DownstreamScheme": "http",
+      "ServiceName": "UserService"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+@host = http://localhost:5115
+
+###
+GET {{host}}/api/avatar/test.txt
+Accept: application/json
+
+###
+GET {{host}}/api/avatar/notfound_file.jpeg
+Accept: application/json

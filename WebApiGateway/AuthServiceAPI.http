@@ -1,0 +1,42 @@
+@host = http://localhost:5115
+
+###
+POST {{host}}/api/auth/register
+Accept: application/json
+Content-Type: application/json
+
+{
+    "username": "random_user_1",
+    "password": "Password123!"
+}
+
+###
+POST {{host}}/api/auth/register
+Accept: application/json
+Content-Type: application/json
+
+{
+    "username": "random_user_{{$guid}}",
+    "password": "invalidpassword"
+}
+
+###
+POST {{host}}/api/auth/login
+Accept: application/json
+Content-Type: application/json
+
+{
+    "username": "random_user_1",
+    "password": "Password123!"
+}
+
+###
+GET {{host}}/api/auth/userinfo
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoicmFuZG9tX3VzZXJfMSIsImp0aSI6IjgzMTFlOWMzLTU2ZTUtNDkyNC1iNjlhLTFlYzlkMWU1M2ZlOCIsImV4cCI6MTc1MjM1NTgyOSwiaXNzIjoiWW91ckFwcE5hbWUiLCJhdWQiOiJZb3VyQXBwQ2xpZW50cyJ9.RtUWBdnRJ2S9SilS0SXJq9xtktrI1KVOnlzHhJwl_vM
+
+
+###
+GET {{host}}/api/auth/userinfo
+Accept: application/json
+Authorization: Bearer anything

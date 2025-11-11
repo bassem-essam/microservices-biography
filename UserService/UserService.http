@@ -1,0 +1,89 @@
+@baseUrl = http://localhost:5113
+
+GET {{baseUrl}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{baseUrl}}/hello
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGVzdHVzZXIiLCJqdGkiOiJjZjk5NjI3Zi0zOTZkLTQxZDUtOWM5Yi1lMmRmMWZjMWRkOTUiLCJleHAiOjE3NDc4Mzc0NTMsImlzcyI6IllvdXJBcHBOYW1lIiwiYXVkIjoiWW91ckFwcENsaWVudHMifQ.p9lX58ezwlj625HDqHrQTZnUSBSp8UPItEfdXxHpKwg
+
+###
+
+GET {{baseUrl}}/users/create/testUSER
+Accept: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGVzdHVzZXIiLCJqdGkiOiJjZjk5NjI3Zi0zOTZkLTQxZDUtOWM5Yi1lMmRmMWZjMWRkOTUiLCJleHAiOjE3NDc4Mzc0NTMsImlzcyI6IllvdXJBcHBOYW1lIiwiYXVkIjoiWW91ckFwcENsaWVudHMifQ.p9lX58ezwlj625HDqHrQTZnUSBSp8UPItEfdXxHpKwg
+
+###
+
+POST {{baseUrl}}/internal_api/users/create
+Accept: application/json
+Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGVzdHVzZXIiLCJqdGkiOiJjZjk5NjI3Zi0zOTZkLTQxZDUtOWM5Yi1lMmRmMWZjMWRkOTUiLCJleHAiOjE3NDc4Mzc0NTMsImlzcyI6IllvdXJBcHBOYW1lIiwiYXVkIjoiWW91ckFwcENsaWVudHMifQ.p9lX58ezwlj625HDqHrQTZnUSBSp8UPItEfdXxHpKwg
+
+{
+    "username": "freshuser21337"
+}
+
+
+###
+POST {{baseUrl}}/internal_api/users/delete
+Accept: application/json
+Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGVzdHVzZXIiLCJqdGkiOiJjZjk5NjI3Zi0zOTZkLTQxZDUtOWM5Yi1lMmRmMWZjMWRkOTUiLCJleHAiOjE3NDc4Mzc0NTMsImlzcyI6IllvdXJBcHBOYW1lIiwiYXVkIjoiWW91ckFwcENsaWVudHMifQ.p9lX58ezwlj625HDqHrQTZnUSBSp8UPItEfdXxHpKwg
+
+{
+    "username": "anotherUser1"
+}
+
+###
+
+GET {{baseUrl}}/user/testUSER
+Accept: application/json
+
+###
+POST {{baseUrl}}/users/update
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryABC123
+------WebKitFormBoundaryABC123
+Content-Disposition: form-data; name="username"
+Content-Type: text/plain
+
+BINARY IMAGE HERE
+------WebKitFormBoundaryABC123--
+
+
+
+### 
+
+GET /api/profile HTTP/1.1
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: en-US,en;q=0.9
+Connection: keep-alive
+Host: localhost:4200
+Referer: http://localhost:4200/profile
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+sec-ch-ua: "Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Linux"
+
+
+###
+
+GET {{baseUrl}}/api/users/freshly123
+Accept: application/json
+
+
+###
+
+GET {{baseUrl}}/api/search-users?searchTerm=g
+Accept: application/json
+
+
+###
+GET {{baseUrl}}/api/top-users?limit=5
+Accept: application/json

@@ -1,0 +1,13 @@
+{
+  "Routes": [
+    {
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "UpstreamPathTemplate": "/api/avatar/{anything}",
+      "DownstreamPathTemplate": "/avatars/{anything}",
+      "DownstreamScheme": "http",
+      "ServiceName": "AvatarService"
+    }
+  ]
+}

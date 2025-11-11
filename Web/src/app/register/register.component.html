@@ -1,0 +1,48 @@
+<div class="min-h-[70vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+      <div>
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Create your account</h2>
+      </div>
+      <form class="mt-8 space-y-6" [formGroup]="registerForm" (submit)="register()">
+        <div class="rounded-md space-y-4">
+          <div>
+            <label for="register-username" class="sr-only">Username</label>
+            <input id="register-username" name="username" type="username" required 
+                   class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" 
+                   placeholder="Username" formControlName="username">
+            <span class="text-xs text-red-500">{{ validate('username') }}</span>
+          </div>
+          <div>
+            <label for="register-password" class="sr-only">Password</label>
+            <input id="register-password" name="password" type="password" required 
+                   class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" 
+                   placeholder="Password" formControlName="password">
+            <div *ngFor="let error of getValidations('password')" class="text-xs text-red-500 block">{{ error }}</div>
+          </div>
+          <div>
+            <label for="confirm-password" class="sr-only">Confirm Password</label>
+            <input id="confirm-password" name="confirmPassword" type="password" required 
+                   class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" 
+                   placeholder="Confirm Password" formControlName="confirmPassword">
+            <span class="text-xs text-red-500">{{ validate('confirmPassword') }}</span>
+          </div>
+        </div>
+
+        <div>
+          <button type="submit" [disabled]="!registerForm.valid"
+                  class="disabled:bg-gray-400 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Register
+          </button>
+        </div>
+
+        <div class="text-center">
+          <p class="text-sm text-gray-600">
+            Already have an account?
+            <a routerLink="/login" class="font-medium text-indigo-600 hover:text-indigo-500">
+              Sign in
+            </a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>

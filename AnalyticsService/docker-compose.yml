@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  analytics-service:
+    build: .
+    container_name: analytics_service
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RABBITMQ_HOST=localhost
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
+      - ConnectionStrings__MongoDB=mongodb://admin:password@mongodb:27017/analytics_db?authSource=admin
+

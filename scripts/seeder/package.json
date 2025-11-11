@@ -1,0 +1,12 @@
+{
+  "name": "microservices-api-client",
+  "version": "1.0.0",
+  "description": "Docker container for microservices API interaction",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}

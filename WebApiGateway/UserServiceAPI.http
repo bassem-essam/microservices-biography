@@ -1,0 +1,26 @@
+@host = http://localhost:5115
+
+###
+GET {{host}}/api/user/random_user_1
+Accept: application/json
+
+### not found user
+GET {{host}}/api/user/non_existent_user
+Accept: application/json
+
+###
+GET {{host}}/api/search-users?searchTerm=john
+Accept: application/json
+
+
+###
+GET {{host}}/api/top-users?limit=3
+Accept: application/json
+
+###
+GET {{host}}/api/profile
+Accept: application/json
+
+###
+PUT {{host}}/api/profile
+Accept: application/json

@@ -1,0 +1,7 @@
+services:
+  biography-frontend:
+    build:
+      context: .
+    ports:
+      - 4200:8080
+

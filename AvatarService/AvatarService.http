@@ -1,0 +1,43 @@
+@host = http://localhost:5111
+
+GET {{host}}/ping
+Accept: application/json
+
+###
+
+POST {{host}}/generate
+Accept: image/png
+Content-Type: application/json
+
+{
+    "fullName": "Steve Jobs"
+}
+
+### 
+
+DELETE {{host}}/delete
+Content-Type: application/json
+
+{
+    "avatarPath": "880adac1-c6aa-4e9e-99e1-3c3c2fe8cadd.png"
+}
+
+### 
+POST {{host}}/upload
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryABC123
+
+------WebKitFormBoundaryABC123
+Content-Disposition: form-data; name="avatar"; filename="avatar.jpg"
+Content-Type: image/jpeg
+
+BINARY IMAGE HERE
+------WebKitFormBoundaryABC123--
+
+###
+POST {{host}}/generate
+Accept: application/json
+Content-Type: application/json
+
+{
+    "username": "Steve Jobs"
+}

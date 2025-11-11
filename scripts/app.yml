@@ -1,0 +1,71 @@
+version: '3'
+
+services:
+  dotnet-web-api-gateway:
+    build: ../WebApiGateway/
+    image: dotnet-web-api-gateway
+    container_name: dotnet-web-api-gateway
+    ports:
+      - 5115:5115
+    volumes:
+      - ~/.nuget/packages:/root/.nuget/packages:rw
+
+  dotnet-avatar-service:
+    build: ../AvatarService/
+    image: dotnet-avatar-service
+    container_name: dotnet-avatar-service
+    ports:
+      - 5111:5111
+    volumes:
+      - ~/.nuget/packages:/root/.nuget/packages:rw
+      - avatar_service_data:/app/public/avatars/
+
+  dotnet-auth-service:
+    # build: ../AuthService/
+    build:
+      context: ../AuthService/
+      network: default
+    image: dotnet-auth-service
+    container_name: dotnet-auth-service
+    ports:
+      - 5112:5112
+    volumes:
+      - ~/.nuget/packages:/root/.nuget/packages:rw
+
+  dotnet-user-service:
+    # build: ../UserService/
+    build:
+      context: ../UserService/
+      network: default
+    image: dotnet-user-service
+    container_name: dotnet-user-service
+    ports:
+      - 5113:5113
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+    depends_on:
+      - dotnet-analytics-service
+    volumes:
+      - ~/.nuget/packages:/root/.nuget/packages:rw
+
+  dotnet-analytics-service:
+    build: ../AnalyticsService/
+    image: dotnet-analytics-service
+    container_name: dotnet-analytics-service
+    ports:
+      - 5114:5114
+    volumes:
+      - ~/.nuget/packages:/root/.nuget/packages:rw
+
+  biography-frontend:
+    build: ../Web/
+    image: biography-frontend
+    container_name: dotnet-frontend
+    ports:
+      - 5432:8080
+
+volumes:
+  avatar_service_data:
