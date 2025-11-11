@@ -1,6 +1,12 @@
 # About
 A simple application built to demonstrate microservices architecture with ASP.NET Core.
-It is based on dotnetcore-microservices-poc (https://github.com/asc-lab/dotnetcore-microservices-poc) with additional features.
+
+It is based on the awesome blog post series ["How to build .NET Core microservices"](https://www.altkomsoftware.com/blog/building-microservices-net-core-part-1-plan/) with some additional features.
+
+# Architecture
+This is a block diagram of the whole application architecture where straight lines mean synchronous messaging and dashed lines mean asynchronous messaging.
+
+![biography_architecture_final](https://github.com/user-attachments/assets/6f78768b-cc21-4b1c-abe6-a983d4c7a721)
 
 # Features
 - Authentication with JWT
@@ -16,14 +22,14 @@ It is based on dotnetcore-microservices-poc (https://github.com/asc-lab/dotnetco
 - Containerization with Docker and Docker Compose
 
 # Getting Started
-You must install Docker & Docker Compose before.
-Scripts have been divided into two parts:
 
-- infra.yml runs the necessary infrastructure.
-- app.yml is used to run the application.
-You can use scripts to build/run/stop/down all containers.
+**Prerequisites:** Docker & Docker Compose
 
+Scripts are divided into two parts:
+- `infra.yml` - Runs necessary infrastructure (databases, message broker, etc.)
+- `app.yml` - Runs the application services
 
+### Quick Start
 ```bash
 cd scripts/
 ./seed.sh
@@ -31,13 +37,12 @@ cd scripts/
 ```
 
 Access the API gateway at `http://localhost:5432`
-If the app contains problems, then re run the above run.sh script again.
 
-If the app does not work correctly, you may either:
+### Troubleshooting
 
-- Rerun the run.sh script
-- Run each file of infra.yml and app.yml using the following code
-
+If the app has issues:
+1. Rerun `./run.sh`
+2. Or run infrastructure and application separately:
 ```bash
 docker compose -f infra.yml up
 docker compose -f app.yml up
